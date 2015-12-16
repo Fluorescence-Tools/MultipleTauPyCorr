@@ -50,33 +50,29 @@ def save_corr(data,filename):
         np.savetxt(f, data)
         f.close()
 
-
 def main(filename=None):
     import multaucor
     import time
     if filename is None:
         filename = 'sampledata/sample.spc'
     mt, chan, sync = read_file(filename)
-    mt1 = mt[chan==8]
-    mt2 = mt[chan==9]
     start = time.time()
-    c, ec, t = multaucor.CCF(mt1, mt2)
+    c, ec, t = multaucor.CCF(mt, mt)
     stop = time.time()
     print(stop-start)
 
-    data = np.transpose(np.vstack((t/sync,c,ec))) #arrange in correct manner for text file
+    data = np.transpose(np.vstack((t/sync,c,ec))) # arrange in correct manner for text file
     data = np.hstack((data,np.zeros((data.shape[0],10))))
     save_corr(data, filename)
 
     from matplotlib import pyplot as plt
-    fig = plt.figure()
-    fig.add_subplot(111)
     plt.errorbar(t/sync, c, ec)
     plt.xscale('log')
     plt.xlabel('Timelag t (s)')
     plt.ylabel('G(t)')
     plt.xlim((1e-6, 1))
-    plt.draw()
+    plt.ylim((np.min(c-ec),np.max(c+ec)))
+    plt.axvline(5E-4,linestyle='-')
     plt.show()
 
 if __name__ == '__main__':
