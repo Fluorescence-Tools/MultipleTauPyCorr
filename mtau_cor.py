@@ -10,7 +10,6 @@ def read_file(filename=None):
     :return: Macrotime, Channel, SyncRate
     '''
     data = np.fromfile(filename, dtype='uint32')
-    # data = np.fromfile("m090.spc", dtype='uint32')
     SyncRate = np.bitwise_and(data[0], 16777215)
     data = np.delete(data, 0)
     rout = np.bitwise_and((data >> 8), 240)
@@ -37,10 +36,12 @@ def read_file(filename=None):
 
     return MT, (rout/16).astype(int), SyncRate
 
-def save_corr(data,filename="cor_result.cor"):
+def save_corr(data,filename):
     '''Impement save to .txt file'''
+    if filename is None:
+        filename = "test.cor"
     txt_name = filename[:len(filename)-3]+'cor'
-    with open(txt_name, 'w') as f: #open filename
+    with open(txt_name, 'w') as f: # open filename
         f.write('Correlation file for: '+filename+'\n')
         f.write('Countrate channel 1 [kHz]: '+str(0)+'\n')
         f.write('Countrate channel 2 [kHz]: '+str(0)+'\n')
@@ -50,25 +51,33 @@ def save_corr(data,filename="cor_result.cor"):
         f.close()
 
 
-def main(filename='sampledata/m090.spc'):
-    mt, chan, sync = read_file(filename)
-    mt0 = mt[chan == 8]
-    mt1 = mt[chan == 9]
+def main(filename=None):
     import multaucor
     import time
-    # import multaucor
+    if filename is None:
+        filename = 'sampledata/sample.spc'
+    mt, chan, sync = read_file(filename)
+    mt1 = mt[chan==8]
+    mt2 = mt[chan==9]
     start = time.time()
-    c, ec, t = multaucor.CCF(mt, mt)
+    c, ec, t = multaucor.CCF(mt1, mt2)
     stop = time.time()
     print(stop-start)
-    from matplotlib import pyplot as plt
-    #plt.errorbar(t/sync, c, yerr=ec)
-    #plt.xscale('log')
-    #plt.show()
 
-    data = np.flipud(np.rot90(np.vstack((t/sync,c,ec)))) #arrange in correct manner for text file
+    data = np.transpose(np.vstack((t/sync,c,ec))) #arrange in correct manner for text file
     data = np.hstack((data,np.zeros((data.shape[0],10))))
     save_corr(data, filename)
+
+    from matplotlib import pyplot as plt
+    fig = plt.figure()
+    fig.add_subplot(111)
+    plt.errorbar(t/sync, c, ec)
+    plt.xscale('log')
+    plt.xlabel('Timelag t (s)')
+    plt.ylabel('G(t)')
+    plt.xlim((1e-6, 1))
+    plt.draw()
+    plt.show()
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:

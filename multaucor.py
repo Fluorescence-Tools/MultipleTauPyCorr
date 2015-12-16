@@ -49,7 +49,7 @@ def CCF(t1, t2, nblock=10, nc=10, nb='auto'):
 
     # define blocks
     maxT = np.max([t1[-1], t2[-1]])
-    blocks = np.arange(0, np.max([t1[-1], t2[-1]]), np.floor(maxT/nblock)).astype(int)
+    blocks = np.linspace(0,np.max([t1[-1], t2[-1]]),nblock+1).astype(int)
 
     # preprocess timeaxis
     block_time = np.floor(maxT/nblock)
@@ -63,7 +63,6 @@ def CCF(t1, t2, nblock=10, nc=10, nb='auto'):
     timeaxis[timeaxis < 1] = 1
     timeaxis = np.concatenate([np.array([1]), timeaxis])
     timeaxis = np.cumsum(timeaxis).astype(int)
-
 
     corr = np.zeros((nblock,np.size(timeaxis)))
     for i in range(nblock):
