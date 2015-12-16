@@ -46,9 +46,7 @@ def save_corr(data,filename="cor_result.cor"):
         f.write('Countrate channel 2 [kHz]: '+str(0)+'\n')
         f.write('Valid bins: '+str(np.ones(10))+'\n')
         f.write('Data starts here: \n')
-        writer = csv.writer(f, delimiter='\t')
-        for i in range(data.shape[0]):
-            writer.writerow(data[i, :])
+        np.savetxt(f, data)
         f.close()
 
 
@@ -60,7 +58,7 @@ def main(filename='sampledata/m090.spc'):
     import time
     # import multaucor
     start = time.time()
-    c, ec ,t = multaucor.CCF(mt, mt)
+    c, ec, t = multaucor.CCF(mt, mt)
     stop = time.time()
     print(stop-start)
     from matplotlib import pyplot as plt

@@ -1,5 +1,5 @@
+from __future__ import division
 import ctypes
-
 import numpy as np
 
 _CCF = ctypes.CDLL('libCCF.so')
@@ -86,7 +86,7 @@ def CCF(t1, t2, nblock=10, nc=10, nb='auto'):
         corr_norm[i, :] = np.mean(area)*corr[i, :]/area[i]
     stdcorr = np.std(corr_norm, axis=0)/np.sqrt(nblock)
 
-    # correction as performed in the matlab code (I think this is correct...)
+    # first time bin is actually time lag zero, correct for this:
     timeaxis[21:] -= 1
 
     return mcorr, stdcorr, timeaxis
