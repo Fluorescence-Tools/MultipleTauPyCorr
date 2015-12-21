@@ -57,7 +57,7 @@ def main(filename=None):
         filename = 'sampledata/sample.spc'
     mt, chan, sync = read_file(filename)
     start = time.time()
-    c, ec, t = multaucor.CCF(mt, mt)
+    c, ec, t = multaucor.CCF(mt.astype(float).tolist(), mt.astype(float))
     stop = time.time()
     print(stop-start)
 
