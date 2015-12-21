@@ -50,6 +50,7 @@ def save_corr(data,filename):
         np.savetxt(f, data)
         f.close()
 
+
 def main(filename=None):
     import multaucor
     import time
@@ -60,7 +61,7 @@ def main(filename=None):
     c, ec, t = multaucor.CCF(mt.astype(float).tolist(), mt.astype(float))
     stop = time.time()
     print(stop-start)
-
+    np.save("sampledata/sample_data",mt)
     data = np.transpose(np.vstack((t/sync,c,ec))) # arrange in correct manner for text file
     data = np.hstack((data,np.zeros((data.shape[0],10))))
     save_corr(data, filename)

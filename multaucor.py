@@ -3,11 +3,13 @@ import ctypes
 import numpy as np
 import warnings
 
+__author__ = "Anders Barth"
+__version__ = "0.1"
 # load shared library
 _CCF = ctypes.CDLL('libCCF.so')
 
 
-def performCCF(t1, t2, nc, nb, timeaxis):
+def _CCF_inC(t1, t2, nc, nb, timeaxis):
     """
     Wrapper function to communicate between python and C using ctypes library.
 
@@ -119,7 +121,7 @@ def CCF(t1, t2, nblock=10, nc=10, nb='auto'):
 
     corr = np.zeros((nblock, np.size(timeaxis)))
     for i in range(nblock):
-        corr[i, :] = performCCF(t1[(t1 > blocks[i]) & (t1 <= blocks[i + 1])] - blocks[i],
+        corr[i, :] = _CCF_inC(t1[(t1 > blocks[i]) & (t1 <= blocks[i + 1])] - blocks[i],
                                 t2[(t2 > blocks[i]) & (t2 <= blocks[i + 1])] - blocks[i],
                                 nc, nb, timeaxis)
         # replace -1 occurrences with 0 for time lags that are not realized
