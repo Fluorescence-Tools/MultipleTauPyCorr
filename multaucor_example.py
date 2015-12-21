@@ -8,6 +8,7 @@ __author__ = 'Anders'
 Example analysis using sampple data found in sampledata/sample_data.npy.
 Synthetic data of a single diffusing species. Diffusion time ~= 0.5 ms (indicated in plot).
 """
+
 # load data
 t = np.load("sampledata/sample_data.npy")
 syncrate = 27027027.027  # normally provided by photon file
