@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import time
 from multaucor import CCF as correlate
-__author__ = 'Anders'
+__author__ = 'Anders Barth'
 
 """
 Example analysis using sampple data found in sampledata/sample_data.npy.
