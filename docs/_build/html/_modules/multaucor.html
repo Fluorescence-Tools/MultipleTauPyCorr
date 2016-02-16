@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>multaucor &mdash; multipletau_cor_tttr 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="multipletau_cor_tttr 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">multipletau_cor_tttr 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for multaucor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Anders Barth&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.1&quot;</span>
+<span class="c1"># load shared library</span>
+<span class="n">_CCF</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s1">&#39;libCCF/libCCF.so&#39;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_CCF_inC</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">nc</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">timeaxis</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper function to communicate between python and C using ctypes library.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    t1       :   Numpy arrays of photon arrival times in channel 1 (integer type)</span>
+<span class="sd">    t2       :   Numpy arrays of photon arrival times in channel 2 (integer type)</span>
+<span class="sd">    nc       :   Number of time points per logarithmic step</span>
+<span class="sd">    nb       :   Number of logarithmic steps</span>
+<span class="sd">    timeaxis :   Logarithmic timeaxis as defined by nc and nb</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    corr_res :   1d array of correlation result</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The returned array yields the correlation of intensity fluctuations, decaying to zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_CCF</span>
+    <span class="c1"># read out number of photons and max time</span>
+    <span class="n">np1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span>
+    <span class="n">np2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+    <span class="n">maxT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">t1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">t2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+    <span class="c1"># convert numpy arrays to python lists so they can be converted to ctypes</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">np1</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">w2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">np2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">t2</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">timeaxis</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="c1"># initialize output</span>
+    <span class="n">zer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">corrl</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">))(</span><span class="o">*</span><span class="n">zer</span><span class="p">)</span>
+
+    <span class="c1"># call C function with converted data types</span>
+    <span class="n">_CCF</span><span class="o">.</span><span class="n">CCF</span><span class="p">((</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int64</span> <span class="o">*</span> <span class="n">np1</span><span class="p">)(</span><span class="o">*</span><span class="n">t1</span><span class="p">),</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int64</span> <span class="o">*</span> <span class="n">np2</span><span class="p">)(</span><span class="o">*</span><span class="n">t2</span><span class="p">),</span>
+             <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span> <span class="o">*</span> <span class="n">np1</span><span class="p">)(</span><span class="o">*</span><span class="n">w1</span><span class="p">),</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span> <span class="o">*</span> <span class="n">np2</span><span class="p">)(</span><span class="o">*</span><span class="n">w2</span><span class="p">),</span>
+             <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">nc</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">nb</span><span class="p">),</span>
+             <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">np1</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">np2</span><span class="p">),</span>
+             <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">))(</span><span class="o">*</span><span class="n">timeaxis</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">corrl</span><span class="p">))</span>
+
+    <span class="c1"># convert output back to numpy array</span>
+    <span class="n">corrl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">corrl</span><span class="p">)</span>
+
+    <span class="c1"># perform normalizing</span>
+    <span class="n">divisor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+    <span class="n">divisor</span><span class="p">[(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">divisor</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">nc</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> <span class="n">nc</span><span class="p">))</span>
+    <span class="n">corr_res</span> <span class="o">=</span> <span class="n">corrl</span> <span class="o">/</span> <span class="n">divisor</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxT</span> <span class="o">-</span> <span class="n">timeaxis</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np1</span> <span class="o">/</span> <span class="n">t1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">np2</span> <span class="o">/</span> <span class="n">t2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">corr_res</span>
+
+
+<div class="viewcode-block" id="CCF"><a class="viewcode-back" href="../multaucor.html#multaucor.CCF">[docs]</a><span class="k">def</span> <span class="nf">CCF</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">nblock</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">nc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs crosscorrelation of time-tagged photon data t1 and t2 using semi-logarithmic timeaxis</span>
+<span class="sd">    with nb logarithmic levels and nc equally spaced timebins per level.</span>
+<span class="sd">    Error estimation is performed by splitting the measurement into nblock time segments of equal length and</span>
+<span class="sd">    taking the standard error of mean.</span>
+
+<span class="sd">    :param t1:      Numpy arrays of photon arrival times in channel 1 (integer type)</span>
+<span class="sd">    :param t2:      Numpy arrays of photon arrival times in channel 2 (integer type)</span>
+<span class="sd">    :param nblock:   Number of blocks used for error estimation. (Default: 10)</span>
+<span class="sd">    :param nc:      Number of time points per logarithmic level. (Default: 10)</span>
+<span class="sd">    :param nb:      Number of logarithmic levels. &#39;auto&#39; takes the maximum possible lagtime to calculate nb.</span>
+
+<span class="sd">    :return corr_res:   1d array of correlation result</span>
+
+<span class="sd">    The returned array yields the correlation of intensity fluctuations, decaying to zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Check inputs and convert if feasible</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Input array 1 is not a numpy array, converting...&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Input array 2 is not a numpy array, converting...&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">t1</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]:</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Input array 1 is not of integer type, converting...&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">t2</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]:</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">t2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Input array 2 is not of integer type, converting...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># define blocks</span>
+    <span class="n">maxT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">t1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">t2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">t1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">t2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]),</span> <span class="n">nblock</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># preprocess timeaxis</span>
+    <span class="n">block_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">maxT</span> <span class="o">/</span> <span class="n">nblock</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nb</span> <span class="ow">is</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="n">timeaxis_exponent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">block_time</span> <span class="o">/</span> <span class="n">nc</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">nb</span> <span class="o">=</span> <span class="n">timeaxis_exponent</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">timeaxis_exponent</span> <span class="o">=</span> <span class="n">nb</span>
+    <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">nc</span> <span class="o">*</span> <span class="p">(</span><span class="n">timeaxis_exponent</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">timeaxis</span> <span class="o">*=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">)))</span> <span class="o">/</span> <span class="n">nc</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">timeaxis</span><span class="p">[</span><span class="n">timeaxis</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span> <span class="n">timeaxis</span><span class="p">])</span>
+    <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nblock</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nblock</span><span class="p">):</span>
+        <span class="n">corr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">_CCF_inC</span><span class="p">(</span><span class="n">t1</span><span class="p">[(</span><span class="n">t1</span> <span class="o">&gt;</span> <span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t1</span> <span class="o">&lt;=</span> <span class="n">blocks</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])]</span> <span class="o">-</span> <span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                <span class="n">t2</span><span class="p">[(</span><span class="n">t2</span> <span class="o">&gt;</span> <span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t2</span> <span class="o">&lt;=</span> <span class="n">blocks</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])]</span> <span class="o">-</span> <span class="n">blocks</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                <span class="n">nc</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">timeaxis</span><span class="p">)</span>
+        <span class="c1"># replace -1 occurrences with 0 for time lags that are not realized</span>
+        <span class="n">corr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">i</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]):]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># remove zeros at end</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">corr</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">corr</span><span class="p">[:,</span> <span class="p">:</span><span class="n">valid</span><span class="p">]</span>
+    <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">timeaxis</span><span class="p">[:</span><span class="n">valid</span><span class="p">]</span>
+
+    <span class="c1"># average and standard deviation</span>
+    <span class="n">mcorr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># calculate std on normalized curves!</span>
+    <span class="n">corr_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nblock</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">timeaxis</span><span class="p">)))</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)):</span>
+        <span class="n">corr_norm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">area</span><span class="p">)</span> <span class="o">*</span> <span class="n">corr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">/</span> <span class="n">area</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">stdcorr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">corr_norm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nblock</span><span class="p">)</span>
+
+    <span class="c1"># first time bin is actually time lag zero, correct for this:</span>
+    <span class="n">timeaxis</span><span class="p">[</span><span class="mi">21</span><span class="p">:]</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">mcorr</span><span class="p">,</span> <span class="n">stdcorr</span><span class="p">,</span> <span class="n">timeaxis</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">multipletau_cor_tttr 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Anders Barth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

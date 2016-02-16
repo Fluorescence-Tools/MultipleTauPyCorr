@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import time
-from multipletau_cor_tttr import correlate
+from multipletau_cor_tttr.correlate import CCF as xcorr
 import os
 __author__ = 'Anders Barth'
 
@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     # correlate and time
     start = time.time()
-    corr, error, timeaxis = correlate.CCF(t, t)
+    corr, error, timeaxis = xcorr(t, t)
     stop = time.time()
     print("Autocorrelated " + str(len(t)) + " photons in " + str(stop-start) + " s.")
 
