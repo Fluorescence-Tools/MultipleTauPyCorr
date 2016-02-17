@@ -59,31 +59,20 @@ with nb logarithmic levels and nc equally spaced timebins per level.
 Error estimation is performed by splitting the measurement into nblock time segments of equal length and
 taking the standard error of mean.
 The returned array yields the correlation of intensity fluctuations, decaying to zero.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>t1</strong> &#8211; Numpy arrays of photon arrival times in channel 1 (integer type)</li>
-<li><strong>t2</strong> &#8211; Numpy arrays of photon arrival times in channel 2 (integer type)</li>
-<li><strong>nblock</strong> &#8211; Number of blocks used for error estimation. (Default: 10)</li>
-<li><strong>nc</strong> &#8211; Number of time points per logarithmic level. (Default: 10)</li>
-<li><strong>nb</strong> &#8211; Number of logarithmic levels. &#8216;auto&#8217; takes the maximum possible lagtime to calculate nb.</li>
+<p>Parameters:</p>
+<ul class="simple">
+<li>t1: Numpy arrays of photon arrival times in channel 1 (integer type)</li>
+<li>t2: Numpy arrays of photon arrival times in channel 2 (integer type)</li>
+<li>nblock: Number of blocks used for error estimation. (Default: 10)</li>
+<li>nc: Number of time points per logarithmic level. (Default: 10)</li>
+<li>nb: Number of logarithmic levels. &#8216;auto&#8217; takes the maximum possible lagtime to calculate nb.</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return mcorr:</th><td class="field-body"><p class="first">1d array of correlation result</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return stdcorr:</th><td class="field-body"><p class="first">Standard error of mean of correlation result</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Return timeaxis:</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Timeaxis</p>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Return:</p>
+<ul class="simple">
+<li>mcorr: 1d array of correlation result</li>
+<li>stdcorr: Standard error of mean of correlation result</li>
+<li>timeaxis: Timeaxis</li>
+</ul>
 </dd></dl>
 
 <dl class="function">
@@ -91,12 +80,18 @@ The returned array yields the correlation of intensity fluctuations, decaying to
 <code class="descclassname">multipletau_cor_tttr.correlate.</code><code class="descname">_CCF_inC</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>nc</em>, <em>nb</em>, <em>timeaxis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multipletau_cor_tttr/correlate.html#_CCF_inC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#multipletau_cor_tttr.correlate._CCF_inC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper function to communicate between python and C using ctypes library.
 The returned array yields the correlation of intensity fluctuations, decaying to zero.</p>
-<p>t1       :   Numpy arrays of photon arrival times in channel 1 (integer type)
-t2       :   Numpy arrays of photon arrival times in channel 2 (integer type)
-nc       :   Number of time points per logarithmic step
-nb       :   Number of logarithmic steps
-timeaxis :   Logarithmic timeaxis as defined by nc and nb</p>
-<p>corr_res :   1d array of correlation result</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>t1: Numpy arrays of photon arrival times in channel 1 (integer type)</li>
+<li>t2: Numpy arrays of photon arrival times in channel 2 (integer type)</li>
+<li>nc: Number of time points per logarithmic step</li>
+<li>nb: Number of logarithmic steps</li>
+<li>timeaxis: Logarithmic timeaxis as defined by nc and nb</li>
+</ul>
+<p>Return:</p>
+<ul class="simple">
+<li>corr_res: 1d array of correlation result</li>
+</ul>
 </dd></dl>
 
 </div>
