@@ -7,12 +7,12 @@ __author__ = 'Anders Barth'
 
 if __name__ == '__main__':
     """
-    Example analysis using sample data found in sampledata/sample_data.npy.
+    Example analysis using sample data found in sample_data.npy.
     Synthetic data of a single diffusing species. Diffusion time ~= 0.5 ms (indicated in plot).
     """
 
     # load data
-    t = np.load(os.path.join(os.path.dirname(__file__), "sampledata/sample_data.npy"))
+    t = np.load(os.path.join(os.path.dirname(__file__), 'sample_data.npy'))
     syncrate = 27027027.027  # normally provided by photon file
 
     # correlate and time

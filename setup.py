@@ -1,19 +1,19 @@
-from distutils.core import setup
+from distutils.core import setup, Extension
+
+module = Extension('multipletau_cor_tttr/CCF',
+                    sources = ['multipletau_cor_tttr/CCF.c'])
 
 setup(
-    name='py',
-    version='0.1',
+    name='multipletau_cor_tttr',
+    version='0.1.3',
     author='Anders Barth',
     author_email='anders.barth@gmail.com',
     packages=['multipletau_cor_tttr'],
-    scripts=['bin/cor_from_file.py','bin/multipletau_cor_tttr_example.py'],
-    url='http://pypi.python.org/pypi/multipletau_cor_tttr/',
-    #license='LICENSE.txt',
+    include_package_data = True,
+    scripts=['bin/cor_from_file.py', 'bin/multipletau_cor_tttr_example.py',
+             'bin/sampledata/sample_data.npy','bin/sampledata/sample.spc'],
+    url='http://testpypi.python.org/pypi/multipletau_cor_tttr/',
     description='Library for correlation of time-tagged time-resolved photon data for fluorescence correlation spectroscopy (FCS) analysis.',
     long_description=open('README').read(),
-    install_requires=[
-        "numpy >= 1.9.3",
-        "matplotlib >= 1.4.3",
-        "ctypes >= 1.1.0"
-    ],
+      ext_modules = [module],
 )

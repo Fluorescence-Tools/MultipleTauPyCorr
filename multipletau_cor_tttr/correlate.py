@@ -1,3 +1,4 @@
+# Copyright (c) 2016 Anders Barth
 from __future__ import division
 import ctypes
 import numpy as np
@@ -7,7 +8,7 @@ import os
 __author__ = "Anders Barth"
 __version__ = "0.1"
 # load shared library
-_CCF = ctypes.CDLL(os.path.join(os.path.dirname(__file__), 'libCCF/libCCF.so'))
+_CCF = ctypes.CDLL(os.path.join(os.path.dirname(__file__), 'CCF.so'))
 
 
 def _CCF_inC(t1, t2, nc, nb, timeaxis):
@@ -78,7 +79,9 @@ def CCF(t1, t2, nblock=10, nc=10, nb='auto'):
     :param nc:      Number of time points per logarithmic level. (Default: 10)
     :param nb:      Number of logarithmic levels. 'auto' takes the maximum possible lagtime to calculate nb.
 
-    :return corr_res:   1d array of correlation result
+    :return mcorr:   1d array of correlation result
+    :return stdcorr: Standard error of mean of correlation result
+    :return timeaxis:Timeaxis
 
     The returned array yields the correlation of intensity fluctuations, decaying to zero.
     """
@@ -117,8 +120,8 @@ def CCF(t1, t2, nblock=10, nc=10, nb='auto'):
     corr = np.zeros((nblock, np.size(timeaxis)))
     for i in range(nblock):
         corr[i, :] = _CCF_inC(t1[(t1 > blocks[i]) & (t1 <= blocks[i + 1])] - blocks[i],
-                                t2[(t2 > blocks[i]) & (t2 <= blocks[i + 1])] - blocks[i],
-                                nc, nb, timeaxis)
+                              t2[(t2 > blocks[i]) & (t2 <= blocks[i + 1])] - blocks[i],
+                              nc, nb, timeaxis)
         # replace -1 occurrences with 0 for time lags that are not realized
         corr[i, (np.size(timeaxis) - np.where(corr[i][::-1] != -1)[0][0]):] = 0
     # remove zeros at end
