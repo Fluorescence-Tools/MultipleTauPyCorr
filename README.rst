@@ -15,6 +15,6 @@ multipletau_cor_tttr can be applied to any single photon counting data that is r
 How do I use the library?
 ---------------------
 
-Simply import the CCF function from multaucor:
+Simply import the CCF function from multipletau_cor_tttr:
 
-from multaucor import CCF
+from multipletau_cor_tttr.correlate import CCF

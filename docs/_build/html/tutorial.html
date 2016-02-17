@@ -23,6 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="multipletau_cor_tttr 0.1 documentation" href="index.html" />
     <link rel="next" title="multipletau_cor_tttr.correlate Reference" href="multipletau_cor_tttr_reference.html" />
     <link rel="prev" title="Welcome to multipletau_cor_tttr’s documentation!" href="index.html" /> 
@@ -60,7 +61,7 @@
 <dt>multipletau_cor_tttr is available as a module on <a class="reference external" href="https://pypi.python.org/pypi">PyPI</a>, the Python Package Index.</dt>
 <dd></dd>
 </dl>
-<p>If you have python installed, you can download multipletau_cor_tttr using:</p>
+<p>If you have python installed, you can download <em>multipletau_cor_tttr</em> using:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install multipletau_cor_tttr
 </pre></div>
 </div>
@@ -76,11 +77,10 @@
 </pre></div>
 </div>
 <p>You can then use the imported function <code class="docutils literal"><span class="pre">do_correlation</span></code> directly as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cor,stdcor,timeaxis = do_correlation(`data1,data2)
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cor</span><span class="p">,</span><span class="n">stdcor</span><span class="p">,</span><span class="n">timeaxis</span> <span class="o">=</span> <span class="n">do_correlation</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span><span class="n">data2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>`
-Here, <code class="docutils literal"><span class="pre">data1</span></code> and <code class="docutils literal"><span class="pre">data2</span></code> are the photon time stamps in channel 1 and 2, and the resulting correlation function is given by
+<p>Here, <code class="docutils literal"><span class="pre">data1</span></code> and <code class="docutils literal"><span class="pre">data2</span></code> are the photon time stamps in channel 1 and 2, and the resulting correlation function is given by
 <code class="docutils literal"><span class="pre">timeaxis</span></code> and <code class="docutils literal"><span class="pre">cor</span></code>. Additionally, the standard error of mean (SEM) for every data point is given in <code class="docutils literal"><span class="pre">stdcor</span></code>.</p>
 </div>
 <div class="section" id="running-the-example-script">
@@ -116,7 +116,7 @@ Open a terminal and execute:</p>
                         title="previous chapter">Welcome to multipletau_cor_tttr&#8217;s documentation!</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="multipletau_cor_tttr_reference.html"
-                        title="next chapter">multipletau_cor_tttr.correlate Reference</a></p>
+                        title="next chapter"><em>multipletau_cor_tttr.correlate</em> Reference</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">

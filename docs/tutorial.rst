@@ -1,10 +1,10 @@
-*multipletau_cor_tttr* Tutorial
+multipletau_cor_tttr Tutorial
 =============================
 
-Installing *multipletau_cor_tttr*
+Installing multipletau_cor_tttr
 -------------------------------
 
-*multipletau_cor_tttr* is available as a module on PyPI_, the Python Package Index.
+multipletau_cor_tttr is available as a module on PyPI_, the Python Package Index.
     .. _PyPi: https://pypi.python.org/pypi
 
 If you have python installed, you can download *multipletau_cor_tttr* using:
@@ -13,7 +13,7 @@ If you have python installed, you can download *multipletau_cor_tttr* using:
 
     $ pip install multipletau_cor_tttr
 
-Using *multipletau_cor_tttr*
+Using multipletau_cor_tttr
 --------------------------
 
 Import the module into you active python session or python script:
@@ -32,8 +32,8 @@ You can then use the imported function ``do_correlation`` directly as:
 
 .. code-block:: python
 
-    cor,stdcor,timeaxis = do_correlation(`data1,data2)
-`
+    cor,stdcor,timeaxis = do_correlation(data1,data2)
+
 Here, ``data1`` and ``data2`` are the photon time stamps in channel 1 and 2, and the resulting correlation function is given by
 ``timeaxis`` and ``cor``. Additionally, the standard error of mean (SEM) for every data point is given in ``stdcor``.
 

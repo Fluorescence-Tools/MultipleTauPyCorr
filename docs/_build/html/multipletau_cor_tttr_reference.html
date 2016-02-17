@@ -23,6 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="multipletau_cor_tttr 0.1 documentation" href="index.html" />
     <link rel="prev" title="multipletau_cor_tttr Tutorial" href="tutorial.html" /> 
   </head>
@@ -52,7 +53,7 @@
 <span id="multipletau-cor-tttr-correlate-reference"></span><h1>multipletau_cor_tttr.correlate Reference<a class="headerlink" href="#module-multipletau_cor_tttr.correlate" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="multipletau_cor_tttr.correlate.CCF">
-<code class="descclassname">multipletau_cor_tttr.correlate.</code><code class="descname">CCF</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>nblock=10</em>, <em>nc=10</em>, <em>nb='auto'</em><span class="sig-paren">)</span><a class="headerlink" href="#multipletau_cor_tttr.correlate.CCF" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">multipletau_cor_tttr.correlate.</code><code class="descname">CCF</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>nblock=10</em>, <em>nc=10</em>, <em>nb='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multipletau_cor_tttr/correlate.html#CCF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#multipletau_cor_tttr.correlate.CCF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs crosscorrelation of time-tagged photon data t1 and t2 using semi-logarithmic timeaxis
 with nb logarithmic levels and nc equally spaced timebins per level.
 Error estimation is performed by splitting the measurement into nblock time segments of equal length and
@@ -87,7 +88,7 @@ The returned array yields the correlation of intensity fluctuations, decaying to
 
 <dl class="function">
 <dt id="multipletau_cor_tttr.correlate._CCF_inC">
-<code class="descclassname">multipletau_cor_tttr.correlate.</code><code class="descname">_CCF_inC</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>nc</em>, <em>nb</em>, <em>timeaxis</em><span class="sig-paren">)</span><a class="headerlink" href="#multipletau_cor_tttr.correlate._CCF_inC" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">multipletau_cor_tttr.correlate.</code><code class="descname">_CCF_inC</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em>, <em>nc</em>, <em>nb</em>, <em>timeaxis</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multipletau_cor_tttr/correlate.html#_CCF_inC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#multipletau_cor_tttr.correlate._CCF_inC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper function to communicate between python and C using ctypes library.
 The returned array yields the correlation of intensity fluctuations, decaying to zero.</p>
 <p>t1       :   Numpy arrays of photon arrival times in channel 1 (integer type)
