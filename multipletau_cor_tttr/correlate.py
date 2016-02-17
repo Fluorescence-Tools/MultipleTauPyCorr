@@ -14,11 +14,17 @@ def _CCF_inC(t1, t2, nc, nb, timeaxis):
     Wrapper function to communicate between python and C using ctypes library.
     The returned array yields the correlation of intensity fluctuations, decaying to zero.
 
+    Parameters
+    ----------
+
     t1       :   Numpy arrays of photon arrival times in channel 1 (integer type)
     t2       :   Numpy arrays of photon arrival times in channel 2 (integer type)
     nc       :   Number of time points per logarithmic step
     nb       :   Number of logarithmic steps
     timeaxis :   Logarithmic timeaxis as defined by nc and nb
+
+    Return
+    ------
 
     corr_res :   1d array of correlation result
 
@@ -66,15 +72,19 @@ def CCF(t1, t2, nblock=10, nc=10, nb='auto'):
     taking the standard error of mean.
     The returned array yields the correlation of intensity fluctuations, decaying to zero.
 
-    :param t1:        Numpy arrays of photon arrival times in channel 1 (integer type)
-    :param t2:        Numpy arrays of photon arrival times in channel 2 (integer type)
-    :param nblock:    Number of blocks used for error estimation. (Default: 10)
-    :param nc:        Number of time points per logarithmic level. (Default: 10)
-    :param nb:        Number of logarithmic levels. 'auto' takes the maximum possible lagtime to calculate nb.
+    Parameters
+    ----------
+    t1          :       Numpy arrays of photon arrival times in channel 1 (integer type)
+    t2          :       Numpy arrays of photon arrival times in channel 2 (integer type)
+    nblock      :       Number of blocks used for error estimation. (Default: 10)
+    nc          :       Number of time points per logarithmic level. (Default: 10)
+    nb          :       Number of logarithmic levels. 'auto' takes the maximum possible lagtime to calculate nb.
 
-    :return mcorr:    1d array of correlation result
-    :return stdcorr:  Standard error of mean of correlation result
-    :return timeaxis: Timeaxis
+    Return
+    ------
+    mcorr       :       1d array of correlation result
+    stdcorr     :       Standard error of mean of correlation result
+    timeaxis    :       Timeaxis
 
     """
 
