@@ -52,13 +52,13 @@ def save_corr(data,filename):
 
 
 def main(filename=None):
-    import multaucor
+    import multipletau_cor_tttr
     import time
     if filename is None:
         filename = 'sampledata/sample.spc'
     mt, chan, sync = read_file(filename)
     start = time.time()
-    c, ec, t = multaucor.CCF(mt.astype(float).tolist(), mt.astype(float))
+    c, ec, t = multipletau_cor_tttr.correlate.CCF(mt.astype(float).tolist(), mt.astype(float))
     stop = time.time()
     print(stop-start)
     np.save("sampledata/sample_data",mt)

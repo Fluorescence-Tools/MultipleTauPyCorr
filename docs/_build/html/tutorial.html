@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>multipletau_cor_tttr Tutorial &mdash; multipletau_cor_tttr 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="multipletau_cor_tttr 0.1 documentation" href="index.html" />
+    <link rel="next" title="multipletau_cor_tttr.correlate Reference" href="multipletau_cor_tttr_reference.html" />
+    <link rel="prev" title="Welcome to multipletau_cor_tttr’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="multipletau_cor_tttr_reference.html" title="multipletau_cor_tttr.correlate Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to multipletau_cor_tttr’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multipletau_cor_tttr 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="multipletau-cor-tttr-tutorial">
+<h1>multipletau_cor_tttr Tutorial<a class="headerlink" href="#multipletau-cor-tttr-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installing-multipletau-cor-tttr">
+<h2>Installing multipletau_cor_tttr<a class="headerlink" href="#installing-multipletau-cor-tttr" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>multipletau_cor_tttr is available as a module on <a class="reference external" href="https://pypi.python.org/pypi">PyPI</a>, the Python Package Index.</dt>
+<dd></dd>
+</dl>
+<p>If you have python installed, you can download multipletau_cor_tttr using:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install multipletau_cor_tttr
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-multipletau-cor-tttr">
+<h2>Using multipletau_cor_tttr<a class="headerlink" href="#using-multipletau-cor-tttr" title="Permalink to this headline">¶</a></h2>
+<p>Import the module into you active python session or python script:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multpletau_cor_tttr</span>
+</pre></div>
+</div>
+<p>It is easier to directly import the correlation subroutine using an alias (e.g. &#8220;do_correlation&#8221;):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multipletau_cor_tttr.correlate</span> <span class="kn">import</span> <span class="n">CCF</span> <span class="k">as</span> <span class="n">do_correlation</span>
+</pre></div>
+</div>
+<p>You can then use the imported function <code class="docutils literal"><span class="pre">do_correlation</span></code> directly as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>cor,stdcor,timeaxis = do_correlation(`data1,data2)
+</pre></div>
+</div>
+<p>`
+Here, <code class="docutils literal"><span class="pre">data1</span></code> and <code class="docutils literal"><span class="pre">data2</span></code> are the photon time stamps in channel 1 and 2, and the resulting correlation function is given by
+<code class="docutils literal"><span class="pre">timeaxis</span></code> and <code class="docutils literal"><span class="pre">cor</span></code>. Additionally, the standard error of mean (SEM) for every data point is given in <code class="docutils literal"><span class="pre">stdcor</span></code>.</p>
+</div>
+<div class="section" id="running-the-example-script">
+<h2>Running the example script<a class="headerlink" href="#running-the-example-script" title="Permalink to this headline">¶</a></h2>
+<p>Example data is provided with the program. It is found in the python /bin folder.
+Open a terminal and execute:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python multipletau_cor_tttr_example.py
+</pre></div>
+</div>
+<p>Sample data is loaded from the associated file and correlated. The resulting correlation function is plotted.</p>
+<a class="reference internal image-reference" href="_images/figure_1.png"><img alt="_images/figure_1.png" src="_images/figure_1.png" style="width: 300px; height: 200px;" /></a>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">multipletau_cor_tttr Tutorial</a><ul>
+<li><a class="reference internal" href="#installing-multipletau-cor-tttr">Installing multipletau_cor_tttr</a></li>
+<li><a class="reference internal" href="#using-multipletau-cor-tttr">Using multipletau_cor_tttr</a></li>
+<li><a class="reference internal" href="#running-the-example-script">Running the example script</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to multipletau_cor_tttr&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="multipletau_cor_tttr_reference.html"
+                        title="next chapter">multipletau_cor_tttr.correlate Reference</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="multipletau_cor_tttr_reference.html" title="multipletau_cor_tttr.correlate Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to multipletau_cor_tttr’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">multipletau_cor_tttr 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Anders Barth.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

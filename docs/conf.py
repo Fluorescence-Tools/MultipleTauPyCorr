@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# multipletau_cor_tttr_release documentation build configuration file, created by
-# sphinx-quickstart on Tue Feb 16 11:33:24 2016.
+# multipletau_cor_tttr documentation build configuration file, created by
+# sphinx-quickstart on Wed Feb 17 13:21:30 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -28,7 +28,14 @@ sys.path.insert(0, os.path.abspath('..'))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.pngmath', 'sphinx.ext.mathjax', 'sphinx.ext.ifconfig', 'sphinx.ext.viewcode']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.pngmath',
+]
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -44,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'multipletau_cor_tttr_release'
+project = u'multipletau_cor_tttr'
 copyright = u'2016, Anders Barth'
 author = u'Anders Barth'
 
@@ -220,7 +227,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'multipletau_cor_tttr_release.tex', u'multipletau\\_cor\\_tttr Documentation',
+    (master_doc, 'multipletau_cor_tttr.tex', u'multipletau\\_cor\\_tttr Documentation',
      u'Anders Barth', 'manual'),
 ]
 
@@ -250,7 +257,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'multipletau_cor_tttr_release', u'multipletau_cor_tttr_release Documentation',
+    (master_doc, 'multipletau_cor_tttr', u'multipletau_cor_tttr Documentation',
      [author], 1)
 ]
 
@@ -264,8 +271,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'multipletau_cor_tttr_release', u'multipletau_cor_tttr_release Documentation',
-     author, 'multipletau_cor_tttr_release', 'One line description of project.',
+    (master_doc, 'multipletau_cor_tttr', u'multipletau_cor_tttr Documentation',
+     author, 'multipletau_cor_tttr', 'One line description of project.',
      'Miscellaneous'),
 ]
 
