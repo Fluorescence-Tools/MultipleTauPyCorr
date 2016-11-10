@@ -5,12 +5,12 @@ module = Extension('multipletau_cor_tttr/CCF',
 
 setup(
     name='multipletau_cor_tttr',
-    version='0.1.1',
+    version='0.1.2',
     author='Anders Barth',
     license='MIT',
     author_email='anders.barth@gmail.com',
-    packages=['multipletau_cor_tttr', 'sample'],
-    package_data={'sample': ['sample_data.npy', 'multipletau_cor_tttr_example.py']},
+    packages=['multipletau_cor_tttr'],
+    package_data={'multipletau_cor_tttr': ['sample/sample_data.npy', 'sample/multipletau_cor_tttr_example.py']},
     url='http://testpypi.python.org/pypi/multipletau_cor_tttr/',
     description='Library for correlation of time-tagged time-resolved photon data for'
                 ' fluorescence correlation spectroscopy (FCS) analysis.',
