@@ -6,7 +6,7 @@ import warnings
 import os
 
 # load shared library
-_CCF = ctypes.CDLL(os.path.join(os.path.dirname(__file__), 'CCF.so'))
+_CCF = ctypes.CDLL(os.path.join(os.path.dirname(__file__), 'CCF.cpython-35m-darwin.so'))
 
 
 def _CCF_inC(t1, t2, nc, nb, timeaxis):

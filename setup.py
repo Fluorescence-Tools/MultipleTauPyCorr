@@ -5,7 +5,7 @@ module = Extension('multipletau_cor_tttr/CCF',
 
 setup(
     name='multipletau_cor_tttr',
-    version='0.1.2',
+    version='0.1.3',
     author='Anders Barth',
     license='MIT',
     author_email='anders.barth@gmail.com',
